@@ -30,23 +30,29 @@
                             <tbody>
                                 @foreach ($productos as $p)
                                 <tr>
+                                    
                                     <td>{{$p->id}}</td>
                                     <td>{{$p->nombre}}</td>
                                     <td>S/{{number_format($p->precio,2)}}</td>
                                     <td>
                                         <a href="{{'imagenes'.json_decode($p->ruta_imagen)->full}}">
-                                            <img src="{{'imagenes'.json_decode($p->ruta_imagen)->thumb}}" style="width: 40px; border-radius:50%;">
+                                            <img src="{{'imagenes'.json_decode($p->ruta_imagen)->thumb}}" alt="imagen de producto" style="width: 40px; border-radius:50%;">
                                         </a>
-                                        
                                     </td>
+                                    <!-- <td>"{{'imagenes/'.json_decode($p->ruta_imagen)->thumb}}"</td>  -->
                                     <td>{{date("d/m/Y",strtotime($p->created_at))}}</td>
                                     <td>
-                                        <form action="{{route('productos.destroy',[$p->id])}}" id="form_eliminar_{{$p->id}}" method="post">
-                                        <a href="{{route('productos.edit',[$p->id])}}" class='btn btn-success'><i class="fa fa-pencil"></i></a>
-                                        <a href="javascript:eliminar({{$p->id}})" class='btn btn-danger'><i class="fa fa-trash"></i></a>
+                                        {{-- <form id="form_eliminar_{{$p->id}}" method="post" action="{{route(productos.destroy, [$p->id])}}">
+                                            {{csrf_field}}
+                                            {{method_field("DELETE")}}
+                                        </form> --}}
+                                        <a href="{{route('productos.edit',[$p->id])}}" class="btn btn-success"><i class="fa fa-pencil" ></i></a>
+                                        <a href="" id="eliminar" class="btn btn-danger"><i class="fa fa-trash" ></i></a>
                                     </td>
-                                    </tr>
+
+                                </tr>
                                 @endforeach
+                                
                             </tbody>
                         </table>
                     </div>
@@ -77,14 +83,16 @@
     } );
     </script>
     <script>
-        funcion eliminar(id){
-            var resp = confirm("Desea realmente eliminar el producto?")
-            if(resp){
-                alert(id)
-            }
-        }
+        $(document).ready(function() {
+            $("#eliminar").click(function() {
+                if (confirm("¿Estás seguro que deseas eliminar este producto?")) {
+                alert('se borro tu base de datos xd')
+                } else {
+                    alert('Casi eliminas la base de datos')
+                }
+            });
+            });
     </script>
-
 @endsection
 
 

@@ -22,12 +22,13 @@ class ProductoController extends Controller
         $categorias=Categoria::all();
         return view("productos.create")->with(array("categorias"=>$categorias));
     }
+    
     public function edit($id){
         $data["objeto"] = Producto::find($id);
         $data["categorias"] = Categoria::all();
-
         return view("productos.create")->with($data);
     }
+
     public function store(Request $request){
        // return"hola mundo";
         $validacion=Validator::make($request->all(),[
@@ -40,14 +41,14 @@ class ProductoController extends Controller
                 "error"=>$validacion->messages(),
             ));
         }
-
+        
         if($request->has('id')){
-            $object=Producto::find($request->input('id'));
+            $object = Producto::find($request->input('id'));
         }
         else{
             $object=new Producto();
         }
-        $object=new Producto();
+
         $object->nombre=$request->input("nombre");
         $object->descripcion=$request->input("descripcion");
         $object->precio=$request->input("precio");
